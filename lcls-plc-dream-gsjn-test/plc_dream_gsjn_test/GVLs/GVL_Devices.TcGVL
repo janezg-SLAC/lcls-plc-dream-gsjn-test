@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.18">
+  <GVL Name="GVL_Devices" Id="{6c0b57e1-eeb7-4cd4-8633-06a0c827d91a}">
+    <Declaration><![CDATA[VAR_GLOBAL
+    bLimitForward AT %Q* : BOOL := TRUE;
+    bLimitBackward AT %Q* : BOOL := TRUE;
+
+    eStageEnableMode : ENUM_StageEnableMode := ENUM_StageEnableMode.DURING_MOTION;
+    {attribute 'TcLinkTo' := '.bLimitForwardEnable  := TIIB[Term 2 (EL7047)]^STM Status^Status^Digital input 1;
+                              .bLimitBackwardEnable := TIIB[Term 2 (EL7047)]^STM Status^Status^Digital input 2;
+                              .nRawEncoderULINT     := TIIB[Term 3 (EL5042)]^FB Inputs Channel 2^Position'}
+    {attribute 'pytmc' := '
+        pv: TST:LAB:MMS:01
+    '}
+    M1: ST_MotionStage := (
+        bHardwareEnable := TRUE,
+        bPowerSelf := TRUE,
+        nEnableMode := eStageEnableMode,
+        nHomingMode := ENUM_EpicsHomeCmd.NONE,
+        sName := 'TST:LAB:MMS:01');
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
